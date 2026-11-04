@@ -1,5 +1,18 @@
 #include <iostream>
+#include <string>
+#include <limits>
+
 using namespace std;
+
+int getValidNumber() {
+    int number;
+    while (! (cin >> number)) {
+        cout << "Type a number: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    return number;
+}
 
 int main(int argc, char const *argv[])
 {
@@ -11,11 +24,12 @@ int main(int argc, char const *argv[])
         cout << "Add a new task (1)" << endl;
         cout << "Display your tasks (2)" << endl;
         cout << "Remove a task (3)" << endl;
+        cout << "Exit program (4)" << endl;
         cout << "-----------------------" << endl << endl;
         
         int choice;
         cout << "Your choice: ";
-        cin >> choice;
+        choice = getValidNumber();
         cout << endl;
         
         switch (choice) {
@@ -27,7 +41,9 @@ int main(int argc, char const *argv[])
                 
                 string response;
                 cout << "Type task or (0) to go back: ";
-                cin >> response;
+                
+                cin.ignore();
+                getline(cin, response);
                 
                 if (response == "0") {
                     continue;
@@ -43,7 +59,6 @@ int main(int argc, char const *argv[])
                 cout << "Your tasks:" << endl;
 
                 for (int i = 0; i < counter; i++) {
-                    i + 1;
                     cout << i + 1 << ". " << tasks[i] << endl;
                 }
 
@@ -58,7 +73,7 @@ int main(int argc, char const *argv[])
 
                 int taskNumber;
                 cout << "Which task would you like to remove? Type (0) to go back: ";
-                cin >> taskNumber;
+                taskNumber = getValidNumber();
 
                 if (taskNumber == 0) {
                     continue;
@@ -81,7 +96,12 @@ int main(int argc, char const *argv[])
                 cout << "Task removed successfully" << endl;
                 break;
             }
+
+            case 4:
+                return 0;
+
             default:
+                cout << "This option doesn't exist" << endl;
                 break;
         }
 
