@@ -3,12 +3,10 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    
-    string tasks[3];
+    string tasks[100];
     int counter = 0;
-
+    
     while (true) {
-
         cout << "-----------------------" << endl;
         cout << "Add a new task (1)" << endl;
         cout << "Display your tasks (2)" << endl;
@@ -19,26 +17,36 @@ int main(int argc, char const *argv[])
         cout << "Your choice: ";
         cin >> choice;
         cout << endl;
-
+        
         switch (choice) {
-            case 1:
-                if (counter == 3) {
+            case 1: {
+                if (counter == 100) {
                     cout << "Too many tasks! Your limit of 100 tasks have been reached" << endl;
                     continue;
                 }
-                cout << "Type task: ";
-                cin >> tasks[counter];
+                
+                string response;
+                cout << "Type task or (0) to go back: ";
+                cin >> response;
+                
+                if (response == "0") {
+                    continue;
+                }
+                
+                tasks[counter] = response;
                 counter++;
                 break;
+            }
                 
             case 2:
                 cout << "------------" << endl;
                 cout << "Your tasks:" << endl;
-                for (int i = 0; i < counter; i++)
-                {
+
+                for (int i = 0; i < counter; i++) {
                     i + 1;
                     cout << i + 1 << ". " << tasks[i] << endl;
                 }
+
                 cout << "------------" << endl;
                 break;
             
@@ -49,8 +57,18 @@ int main(int argc, char const *argv[])
                 }
 
                 int taskNumber;
-                cout << "Which task would you like to remove?: ";
+                cout << "Which task would you like to remove? Type (0) to go back: ";
                 cin >> taskNumber;
+
+                if (taskNumber == 0) {
+                    continue;
+                }
+
+                if (taskNumber > counter || taskNumber < 1) {
+                    cout << "This task doesn't exist" << endl;
+                    continue;
+                }
+                
                 cout << endl;
                 
                 for (int i = taskNumber - 1; i < counter - 1; i++) {
@@ -61,17 +79,11 @@ int main(int argc, char const *argv[])
                 counter--;
 
                 cout << "Task removed successfully" << endl;
-                //czy task number jest poprawny?
                 break;
             }
             default:
                 break;
-                //opcja cofnięcia z tego menu
-
         }
-
-
-
 
         cout << endl;
     }
